@@ -127,4 +127,5 @@ const port = Number(Bun.env.PORT ?? 1553);
 export default {
 	fetch: app.fetch,
 	port,
+	hostname: "0.0.0.0",
 };
