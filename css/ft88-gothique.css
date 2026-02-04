@@ -1,0 +1,10 @@
+@font-face {
+	font-family: "FT88 Gothique";
+	src:
+		url("https://fonts.ob248.com/fonts/FT88-Gothique.woff2") format("woff2"),
+		url("https://fonts.ob248.com/fonts/FT88-Gothique.woff") format("woff"),
+		url("https://fonts.ob248.com/fonts/FT88-Gothique.ttf") format("truetype");
+	font-weight: 80;
+	font-style: normal;
+	font-display: swap;
+}

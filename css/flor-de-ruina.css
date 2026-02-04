@@ -3,7 +3,8 @@
 	src:
 		url("https://fonts.ob248.com/fonts/FlorDeRuina-Germen.woff2")
 		format("woff2"),
-		url("https://fonts.ob248.com/fonts/FlorDeRuina-Germen.woff") format("woff");
+		url("https://fonts.ob248.com/fonts/FlorDeRuina-Germen.woff") format("woff"),
+		url("https://fonts.ob248.com/fonts/FlorDeRuina-Germen.ttf") format("truetype");
 	font-weight: 50;
 	font-style: normal;
 	font-display: swap;
@@ -14,7 +15,8 @@
 	src:
 		url("https://fonts.ob248.com/fonts/FlorDeRuina-Semilla.woff2")
 		format("woff2"),
-		url("https://fonts.ob248.com/fonts/FlorDeRuina-Semilla.woff") format("woff");
+		url("https://fonts.ob248.com/fonts/FlorDeRuina-Semilla.woff") format("woff"),
+		url("https://fonts.ob248.com/fonts/FlorDeRuina-Semilla.ttf") format("truetype");
 	font-weight: 80;
 	font-style: normal;
 	font-display: swap;
@@ -24,7 +26,8 @@
 	font-family: "FlorDeRuina";
 	src:
 		url("https://fonts.ob248.com/fonts/FlorDeRuina-Flor.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/FlorDeRuina-Flor.woff") format("woff");
+		url("https://fonts.ob248.com/fonts/FlorDeRuina-Flor.woff") format("woff"),
+		url("https://fonts.ob248.com/fonts/FlorDeRuina-Flor.ttf") format("truetype");
 	font-weight: 100;
 	font-style: normal;
 	font-display: swap;
