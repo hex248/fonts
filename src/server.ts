@@ -226,7 +226,7 @@ const serveFontFile = async (c: Context) => {
 };
 
 app.get("/fonts/*", serveFontFile);
-app.head("/fonts/*", serveFontFile);
+app.on("HEAD", "/fonts/*", serveFontFile);
 app.use("/*", serveStatic({ root: "./public" }));
 
 const cssRoutes = async () => {
