@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>fonts.ob248.com</title>
     <link rel="stylesheet" href="/index.css" />
-    <style id="font-import"></style>
+    <style id="font-import">/* FONT_IMPORT */</style>
   </head>
   <body class="page">
     <header class="decal-grid decal-grid--header">
@@ -21,27 +21,7 @@
 
     <main class="page__main">
       <section class="catalog">
-        <article class="font-card" data-font-card data-font-name="basteleur">
-          <div class="font-card__header">
-            <h2 class="font-card__title">BASTELEUR</h2>
-          </div>
-
-          <div class="font-card__demo">
-            <p class="font-card__demo-primary">
-              The quick brown fox jumps over the lazy dog.
-            </p>
-          </div>
-
-          <div class="font-card__footer">
-            <p class="font-card__label">IMPORT SNIPPET</p>
-            <div class="font-card__snippet">
-              <code class="font-card__code" data-import></code>
-              <button type="button" data-copy class="font-card__copy">
-                COPY
-              </button>
-            </div>
-          </div>
-        </article>
+        <!-- FONT_CARDS -->
       </section>
 
       <footer class="decal-grid" style="margin-top: 2rem; border-top: 1.5px solid var(--border-color); padding-top: 1rem;">
@@ -55,43 +35,59 @@
     </main>
 
     <script>
-      const copyButton = document.querySelector("[data-copy]");
-      const importOutput = document.querySelector("[data-import]");
-      const importStyle = document.querySelector("#font-import");
       const searchInput = document.querySelector("#font-search");
       const fontCards = document.querySelectorAll("[data-font-card]");
 
-      const importSnippet = `@import url("${window.location.origin}/basteleur");`;
+      const buildImportSnippet = (importUrl) => {
+        if (!importUrl) {
+          return "";
+        }
+        return `@import url("${window.location.origin}${importUrl}");`;
+      };
 
-      if (importStyle) {
-        importStyle.textContent = importSnippet;
-      }
+      const copyText = async (text) => {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (error) {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.setAttribute("readonly", "true");
+          textarea.style.position = "absolute";
+          textarea.style.left = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+          return true;
+        }
+      };
 
-      if (importOutput) {
-        importOutput.textContent = importSnippet;
-      }
+      fontCards.forEach((card) => {
+        const importUrl = card.getAttribute("data-import-url");
+        const importSnippet = buildImportSnippet(importUrl);
+        const importOutput = card.querySelector("[data-import]");
+        const copyButton = card.querySelector("[data-copy]");
 
-      if (copyButton) {
-        copyButton.addEventListener("click", async () => {
-          try {
-            await navigator.clipboard.writeText(importSnippet);
-            copyButton.textContent = "Copied";
-            setTimeout(() => {
-              copyButton.textContent = "Copy";
-            }, 1500);
-          } catch (error) {
-            const textarea = document.createElement("textarea");
-            textarea.value = importSnippet;
-            textarea.setAttribute("readonly", "true");
-            textarea.style.position = "absolute";
-            textarea.style.left = "-9999px";
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textarea);
-          }
-        });
-      }
+        if (importOutput) {
+          importOutput.textContent = importSnippet;
+        }
+
+        if (copyButton) {
+          copyButton.addEventListener("click", async () => {
+            if (!importSnippet) {
+              return;
+            }
+            const copied = await copyText(importSnippet);
+            if (copied) {
+              copyButton.textContent = "Copied";
+              setTimeout(() => {
+                copyButton.textContent = "Copy";
+              }, 1500);
+            }
+          });
+        }
+      });
 
       if (searchInput) {
         searchInput.addEventListener("input", (event) => {
