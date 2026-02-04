@@ -1,7 +1,7 @@
 import { readFile, readdir, stat } from "node:fs/promises";
 import { join, parse } from "node:path";
 import { Hono } from "hono";
-import { serveStatic } from "hono/middleware/serve-static";
+import { serveStatic } from "hono/serve-static";
 
 const app = new Hono();
 
