@@ -1,0 +1,10 @@
+@font-face {
+	font-family: "Martian Mono";
+	src:
+		url("/fonts/MartianMonoVF.woff2") format("woff2"),
+		url("/fonts/MartianMonoVF.ttf") format("truetype");
+	font-weight: 100 800;
+	font-stretch: 70% 137.5%;
+	font-style: normal;
+	font-display: swap;
+}
