@@ -1,7 +1,7 @@
-import { readdir } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { join, parse } from "node:path";
 import { Hono } from "hono";
-import { serveStatic } from "hono/bun";
+import { serveStatic } from "hono/serve-static";
 
 const app = new Hono();
 
@@ -58,7 +58,7 @@ const buildFontCatalog = async () => {
 		const baseName = parse(fileName).name;
 		const route = `/${baseName}`;
 		const filePath = join(cssDir, fileName);
-		const css = await Bun.file(filePath).text();
+		const css = await readFile(filePath, "utf8");
 		const families = parseFontFamilies(css);
 
 		if (families.length === 0) {
@@ -92,7 +92,7 @@ const buildFontCatalog = async () => {
 	};
 };
 
-const templateHtml = await Bun.file(templatePath).text();
+const templateHtml = await readFile(templatePath, "utf8");
 const { cards, importCss } = await buildFontCatalog();
 const indexHtml = templateHtml
 	.replace(cardPlaceholder, cards)
@@ -114,7 +114,7 @@ const cssRoutes = async () => {
 		const filePath = join(cssDir, entry.name);
 
 		app.get(route, async (c) => {
-			const css = await Bun.file(filePath).text();
+			const css = await readFile(filePath, "utf8");
 			return c.text(css, 200, {
 				"Content-Type": "text/css; charset=utf-8",
 			});
@@ -124,9 +124,11 @@ const cssRoutes = async () => {
 
 await cssRoutes();
 
-const port = Number(Bun.env.PORT ?? 3000);
+const port = Number(process.env.PORT ?? 3000);
 
 export default {
 	fetch: app.fetch,
 	port,
 };
+
+export { app };
