@@ -20,13 +20,11 @@ const escapeHtml = (value: string) =>
 
 const escapeAttr = (value: string) => escapeHtml(value);
 
-const normalizeFamily = (value: string) => value.replace(/^['"]|['"]$/g, "").trim();
+const normalizeFamily = (value: string) =>
+	value.replace(/^['"]|['"]$/g, "").trim();
 
 const slugify = (value: string) =>
-	value
-		.toLowerCase()
-		.replace(/\s+/g, " ")
-		.trim();
+	value.toLowerCase().replace(/\s+/g, " ").trim();
 
 const parseFontFamilies = (css: string) => {
 	const families = new Set<string>();
@@ -124,7 +122,7 @@ const cssRoutes = async () => {
 
 await cssRoutes();
 
-const port = Number(Bun.env.PORT ?? 3000);
+const port = Number(Bun.env.PORT ?? 1553);
 
 export default {
 	fetch: app.fetch,
