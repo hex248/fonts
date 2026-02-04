@@ -1,8 +1,8 @@
 @font-face {
 	font-family: "Basteleur";
 	src:
-		url("https://fonts.ob248.com/fonts/Basteleur-Bold.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/Basteleur-Bold.woff") format("woff");
+		url("https://fonts.ob248.comBasteleur-Bold.woff2") format("woff2"),
+		url("https://fonts.ob248.comBasteleur-Bold.woff") format("woff");
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
@@ -11,8 +11,8 @@
 @font-face {
 	font-family: "Basteleur";
 	src:
-		url("https://fonts.ob248.com/fonts/Basteleur-Moonlight.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/Basteleur-Moonlight.woff") format("woff");
+		url("https://fonts.ob248.comBasteleur-Moonlight.woff2") format("woff2"),
+		url("https://fonts.ob248.comBasteleur-Moonlight.woff") format("woff");
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;

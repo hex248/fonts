@@ -1,7 +1,6 @@
 @font-face {
 	font-family: "Commit Mono";
-	src: url("https://fonts.ob248.com/fonts/CommitMono-Variable.woff2")
-		format("woff2");
+	src: url("https://fonts.ob248.comCommitMono-Variable.woff2") format("woff2");
 	font-weight: 200 700;
 	font-style: normal;
 	font-display: swap;
@@ -9,8 +8,7 @@
 
 @font-face {
 	font-family: "Commit Mono";
-	src: url("https://fonts.ob248.com/fonts/CommitMono-Variable.woff2")
-		format("woff2");
+	src: url("https://fonts.ob248.comCommitMono-Variable.woff2") format("woff2");
 	font-weight: 200 700;
 	font-style: italic;
 	font-display: swap;

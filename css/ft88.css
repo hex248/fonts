@@ -1,0 +1,69 @@
+@font-face {
+	font-family: "FT88";
+	src:
+		url("https://fonts.ob248.comFT88-Regular.woff2") format("woff2"),
+		url("https://fonts.ob248.comFT88-Regular.woff") format("woff");
+	font-weight: 80;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "FT88";
+	src:
+		url("https://fonts.ob248.comFT88-Italic.woff2") format("woff2"),
+		url("https://fonts.ob248.comFT88-Italic.woff") format("woff");
+	font-weight: 80;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "FT88";
+	src:
+		url("https://fonts.ob248.comFT88-Bold.woff2") format("woff2"),
+		url("https://fonts.ob248.comFT88-Bold.woff") format("woff");
+	font-weight: 200;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "FT88 Expanded";
+	src:
+		url("https://fonts.ob248.comFT88-Expanded.woff2") format("woff2"),
+		url("https://fonts.ob248.comFT88-Expanded.woff") format("woff");
+	font-weight: 80;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "FT88 Gothique";
+	src:
+		url("https://fonts.ob248.comFT88-Gothique.woff2") format("woff2"),
+		url("https://fonts.ob248.comFT88-Gothique.woff") format("woff");
+	font-weight: 80;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "FT88 School";
+	src:
+		url("https://fonts.ob248.comFT88-School.woff2") format("woff2"),
+		url("https://fonts.ob248.comFT88-School.woff") format("woff");
+	font-weight: 80;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "FT88 Serif";
+	src:
+		url("https://fonts.ob248.comFT88-Serif.woff2") format("woff2"),
+		url("https://fonts.ob248.comFT88-Serif.woff") format("woff");
+	font-weight: 80;
+	font-style: normal;
+	font-display: swap;
+}
