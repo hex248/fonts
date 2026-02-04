@@ -5,6 +5,21 @@ import { serveStatic } from "hono/bun";
 
 const app = new Hono();
 
+app.options("*", (c) =>
+	c.text("", 204, {
+		"Access-Control-Allow-Origin": "*",
+		"Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+		"Access-Control-Allow-Headers": "Content-Type, Authorization",
+	}),
+);
+
+app.use("*", async (c, next) => {
+	await next();
+	c.header("Access-Control-Allow-Origin", "*");
+	c.header("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
+	c.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+});
+
 const cssDir = "css";
 const templatePath = join("public", "index.html");
 const cardPlaceholder = "<!-- FONT_CARDS -->";
@@ -145,13 +160,21 @@ const buildFontCatalog = async () => {
 				String(weightRange?.max ?? ""),
 			)}" data-weight-step="10">\n          <div class="font-card__header">\n            <h2 class="font-card__title">${escapeHtml(
 				displayName,
-			)}</h2>${isSingleWeight ? "" : `\n            <div class=\"font-card__controls\">\n              <label class=\"font-card__label\" for=\"weight-${escapeAttr(
-				dataName,
-			)}-${cardIndex}\">WEIGHT</label>\n              ${weightRange ? `<input class=\"font-card__range\" data-weight-range type=\"range\" id=\"weight-${escapeAttr(
-				dataName,
-			)}-${cardIndex}\" min=\"${escapeAttr(String(weightRange.min))}\" max=\"${escapeAttr(String(weightRange.max))}\" step=\"10\" />\n              <span class=\"font-card__value\" data-weight-value></span>` : `<select class=\"font-card__select\" data-weight-select id=\"weight-${escapeAttr(
-				dataName,
-			)}-${cardIndex}\"></select>`}\n            </div>`}\n          </div>\n\n          <div class="font-card__demo">\n            <p class="font-card__demo-primary" data-demo style="font-family: '${escapeAttr(
+			)}</h2>${
+				isSingleWeight
+					? ""
+					: `\n            <div class="font-card__controls">\n              <label class="font-card__label" for="weight-${escapeAttr(
+							dataName,
+						)}-${cardIndex}">WEIGHT</label>\n              ${
+							weightRange
+								? `<input class="font-card__range" data-weight-range type="range" id="weight-${escapeAttr(
+										dataName,
+									)}-${cardIndex}" min="${escapeAttr(String(weightRange.min))}" max="${escapeAttr(String(weightRange.max))}" step="10" />\n              <span class="font-card__value" data-weight-value></span>`
+								: `<select class="font-card__select" data-weight-select id="weight-${escapeAttr(
+										dataName,
+									)}-${cardIndex}"></select>`
+						}\n            </div>`
+			}\n          </div>\n\n          <div class="font-card__demo">\n            <p class="font-card__demo-primary" data-demo style="font-family: '${escapeAttr(
 				fontFamily,
 			)}', serif; font-weight: ${escapeAttr(String(defaultWeight))};">\n              The quick brown fox jumps over the lazy dog.\n            </p>\n          </div>\n\n          <div class="font-card__footer">\n            <p class="font-card__label">IMPORT SNIPPET</p>\n            <div class="font-card__snippet">\n              <code class="font-card__code" data-import></code>\n              <button type="button" data-copy class="font-card__copy">\n                COPY\n              </button>\n            </div>\n          </div>\n        </article>`;
 			cards.push(card);
@@ -159,7 +182,7 @@ const buildFontCatalog = async () => {
 	}
 
 	const importCss = importUrls
-		.map((url) => `@import url(\"${url}\");`)
+		.map((url) => `@import url("${url}");`)
 		.join("\n");
 
 	return {
