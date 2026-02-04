@@ -1,7 +1,7 @@
-import { readFile, readdir } from "node:fs/promises";
+import { readFile, readdir, stat } from "node:fs/promises";
 import { join, parse } from "node:path";
 import { Hono } from "hono";
-import { serveStatic } from "hono/serve-static";
+import { serveStatic } from "hono/middleware/serve-static";
 
 const app = new Hono();
 
@@ -9,6 +9,27 @@ const cssDir = "css";
 const templatePath = join("public", "index.html");
 const cardPlaceholder = "<!-- FONT_CARDS -->";
 const importPlaceholder = "/* FONT_IMPORT */";
+
+const serveStaticFromFs = (options: { root: string }) =>
+	serveStatic({
+		root: options.root,
+		getContent: async (path) => {
+			try {
+				return await readFile(path);
+			} catch (error) {
+				return null;
+			}
+		},
+		isDir: async (path) => {
+			try {
+				const stats = await stat(path);
+				return stats.isDirectory();
+			} catch (error) {
+				return undefined;
+			}
+		},
+		join,
+	});
 
 const escapeHtml = (value: string) =>
 	value
@@ -100,8 +121,8 @@ const indexHtml = templateHtml
 
 app.get("/", (c) => c.html(indexHtml));
 
-app.use("/fonts/*", serveStatic({ root: "." }));
-app.use("/*", serveStatic({ root: "./public" }));
+app.use("/fonts/*", serveStaticFromFs({ root: "." }));
+app.use("/*", serveStaticFromFs({ root: "./public" }));
 
 const cssRoutes = async () => {
 	const entries = await readdir(cssDir, { withFileTypes: true });
