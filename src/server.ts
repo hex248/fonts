@@ -112,6 +112,14 @@ const parseFontData = (css: string) => {
 	};
 };
 
+const addFontDisplaySwap = (css: string) =>
+	css.replace(/@font-face\s*{[^}]*}/gms, (block) => {
+		if (/font-display\s*:/i.test(block)) {
+			return block;
+		}
+		return block.replace(/}\s*$/, "\n\tfont-display: swap;\n}");
+	});
+
 const buildFontCatalog = async () => {
 	const entries = await readdir(cssDir, { withFileTypes: true });
 	const cssFiles = entries
@@ -184,9 +192,7 @@ const buildFontCatalog = async () => {
 		}
 	}
 
-	const importCss = importUrls
-		.map((url) => `@import url("${url}");`)
-		.join("\n");
+	const importCss = "@import url(\"/all\");";
 
 	return {
 		cards: cards.join("\n"),
@@ -246,7 +252,7 @@ const cssRoutes = async () => {
 		const filePath = join(cssDir, entry.name);
 
 		app.get(route, async (c) => {
-			const css = await Bun.file(filePath).text();
+			const css = addFontDisplaySwap(await Bun.file(filePath).text());
 			return c.text(css, 200, {
 				"Content-Type": "text/css; charset=utf-8",
 				"Cache-Control": cssCacheControl,
@@ -256,6 +262,26 @@ const cssRoutes = async () => {
 };
 
 await cssRoutes();
+
+app.get("/all", async (c) => {
+	const entries = await readdir(cssDir, { withFileTypes: true });
+	const cssFiles = entries
+		.filter((entry) => entry.isFile() && entry.name.endsWith(".css"))
+		.map((entry) => entry.name)
+		.sort((a, b) => a.localeCompare(b));
+
+	const combined = await Promise.all(
+		cssFiles.map(async (fileName) => {
+			const filePath = join(cssDir, fileName);
+			return addFontDisplaySwap(await Bun.file(filePath).text());
+		}),
+	);
+
+	return c.text(combined.join("\n"), 200, {
+		"Content-Type": "text/css; charset=utf-8",
+		"Cache-Control": cssCacheControl,
+	});
+});
 
 const port = Number(Bun.env.PORT ?? 1553);
 
