@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>fonts.ob248.com</title>
+    <link rel="stylesheet" href="/index.css" />
+    <style id="font-import"></style>
+  </head>
+  <body class="page">
+    <header class="decal-grid decal-grid--header">
+      fonts.ob248.com
+      <input
+        id="font-search"
+        type="search"
+        placeholder="SEARCH"
+        class="search__input"
+        autofocus
+      />
+    </header>
+
+    <main class="page__main">
+      <section class="catalog">
+        <article class="font-card" data-font-card data-font-name="basteleur">
+          <div class="font-card__header">
+            <h2 class="font-card__title">BASTELEUR</h2>
+          </div>
+
+          <div class="font-card__demo">
+            <p class="font-card__demo-primary">
+              The quick brown fox jumps over the lazy dog.
+            </p>
+          </div>
+
+          <div class="font-card__footer">
+            <p class="font-card__label">IMPORT SNIPPET</p>
+            <div class="font-card__snippet">
+              <code class="font-card__code" data-import></code>
+              <button type="button" data-copy class="font-card__copy">
+                COPY
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <footer class="decal-grid" style="margin-top: 2rem; border-top: 1.5px solid var(--border-color); padding-top: 1rem;">
+        <div class="decal-text-block">
+          OLIVER BRYAN
+        </div>
+        <div class="decal-text-block" style="margin-left: auto; text-align: right;">
+          <a href="https://ob248.com" target="_blank" style="color: var(--fg-color);">ob248.com</a>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      const copyButton = document.querySelector("[data-copy]");
+      const importOutput = document.querySelector("[data-import]");
+      const importStyle = document.querySelector("#font-import");
+      const searchInput = document.querySelector("#font-search");
+      const fontCards = document.querySelectorAll("[data-font-card]");
+
+      const importSnippet = `@import url("${window.location.origin}/basteleur");`;
+
+      if (importStyle) {
+        importStyle.textContent = importSnippet;
+      }
+
+      if (importOutput) {
+        importOutput.textContent = importSnippet;
+      }
+
+      if (copyButton) {
+        copyButton.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(importSnippet);
+            copyButton.textContent = "Copied";
+            setTimeout(() => {
+              copyButton.textContent = "Copy";
+            }, 1500);
+          } catch (error) {
+            const textarea = document.createElement("textarea");
+            textarea.value = importSnippet;
+            textarea.setAttribute("readonly", "true");
+            textarea.style.position = "absolute";
+            textarea.style.left = "-9999px";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+          }
+        });
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener("input", (event) => {
+          const value = event.target.value.toLowerCase();
+          fontCards.forEach((card) => {
+            const name = card.getAttribute("data-font-name") ?? "";
+            const matches = name.includes(value);
+            card.classList.toggle("hidden", !matches);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

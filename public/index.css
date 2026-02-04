@@ -1,0 +1,193 @@
+:root {
+	color-scheme: light;
+	--bg-color: #e5e2d9;
+	--fg-color: #121212;
+	--accent-color: #db7f42;
+	--border-color: #121212;
+	font-family:
+		"CommitMono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo,
+		Monaco, "Courier New", monospace;
+	background-color: var(--bg-color);
+	color: var(--fg-color);
+}
+
+* {
+	box-sizing: border-box;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+body {
+	margin: 0;
+	min-height: 100dvh;
+	background-color: var(--bg-color);
+	color: var(--fg-color);
+	position: relative;
+	overflow-x: hidden;
+}
+
+.page {
+	padding: 2rem;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.page__main {
+	display: flex;
+	flex-direction: column;
+	gap: 3rem;
+}
+
+.search__input {
+	height: 3.5rem;
+	width: 100%;
+	border: 1.5px solid var(--border-color);
+	background: transparent;
+	padding: 0 1rem;
+	font-size: 1.25rem;
+	color: var(--fg-color);
+	outline: none;
+	font-family: inherit;
+}
+
+.search__input:focus {
+	border-color: var(--accent-color);
+}
+
+.catalog {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+	gap: 2rem;
+}
+
+.font-card {
+	display: flex;
+	flex-direction: column;
+	border: 1.5px solid var(--border-color);
+	padding: 1.5rem;
+	position: relative;
+}
+
+.font-card__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	border-bottom: 1.5px solid var(--border-color);
+	padding-bottom: 1rem;
+	margin-bottom: 0.5rem;
+}
+
+.font-card__title {
+	font-size: 1.25rem;
+	font-weight: bold;
+	margin: 0;
+}
+
+.font-card__demo {
+	padding: 1rem 0;
+}
+
+.font-card__demo-primary {
+	margin: 0;
+	font-family: "Basteleur", serif;
+	text-wrap: pretty;
+	text-transform: none; /* Keep font demo as provided */
+	font-size: 2.5rem;
+	color: var(--fg-color);
+}
+
+.font-card__footer {
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+	gap: 1rem;
+	/* border-top: 1.5px solid var(--border-color); */
+	/* padding-top: 1.5rem; */
+}
+
+.font-card__label {
+	font-size: 0.75rem;
+	font-weight: bold;
+	margin: 0;
+}
+
+.font-card__snippet {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	border: 1px solid var(--border-color);
+	background: var(--fg-color);
+	padding: 0.5rem 0.5rem;
+	padding-left: 1rem;
+}
+
+.font-card__code {
+	font-size: 0.8rem;
+	color: var(--bg-color);
+	text-wrap: break-word;
+	text-transform: none;
+}
+
+.font-card__copy {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--bg-color);
+	background: transparent;
+	padding: 0.5rem 1rem;
+	font-size: 0.75rem;
+	font-weight: bold;
+	color: var(--bg-color);
+	cursor: pointer;
+}
+
+.font-card__copy:hover {
+	background: var(--bg-color);
+	color: var(--fg-color);
+}
+
+.hidden {
+	display: none;
+}
+
+/* Decals & Accents */
+.decal-grid {
+	display: flex;
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+
+.decal-grid--header {
+	font-size: 2rem;
+	font-weight: 700;
+	flex-direction: column;
+	justify-content: end;
+	align-items: end;
+	margin-bottom: 1rem;
+}
+
+.decal-text-block {
+	font-size: 0.75rem;
+	line-height: 1.4;
+	font-weight: bold;
+}
+
+a {
+	color: var(--fg-color);
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+	text-underline-offset: 0.15rem;
+}
+
+@media (max-width: 600px) {
+	.page {
+		padding: 1rem;
+	}
+	.font-card__demo-primary {
+		font-size: 1.75rem;
+	}
+}
