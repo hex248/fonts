@@ -1,9 +1,7 @@
 @font-face {
 	font-family: "Basalte Fond";
-	src:
-		url("https://fonts.ob248.com/fonts/Basalte-Fond.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/Basalte-Fond.woff") format("woff"),
-		url("https://fonts.ob248.com/fonts/Basalte-Fond.ttf") format("truetype");
+	src: url("https://fonts.ob248.com/fonts/Basalte-Fond.ttf")
+		format("truetype");
 	font-weight: 80;
 	font-style: normal;
 	font-display: swap;

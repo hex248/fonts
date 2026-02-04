@@ -1,10 +1,6 @@
 @font-face {
 	font-family: "VG5000";
-	src:
-		url("https://fonts.ob248.com/fonts/VG5000-Regular_web.woff2")
-		format("woff2"),
-		url("https://fonts.ob248.com/fonts/VG5000-Regular_web.woff") format("woff"),
-		url("https://fonts.ob248.com/fonts/VG5000-Regular_web.ttf")
+	src: url("https://fonts.ob248.com/fonts/VG5000-Regular_web.ttf")
 		format("truetype");
 	font-weight: 80;
 	font-style: normal;

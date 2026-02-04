@@ -1,9 +1,7 @@
 @font-face {
 	font-family: "Avara";
-	src:
-		url("https://fonts.ob248.com/fonts/Avara-Bold.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/Avara-Bold.woff") format("woff"),
-		url("https://fonts.ob248.com/fonts/Avara-Bold.ttf") format("truetype");
+	src: url("https://fonts.ob248.com/fonts/Avara-Bold.ttf")
+		format("truetype");
 	font-weight: 200;
 	font-style: normal;
 	font-display: swap;
@@ -11,10 +9,8 @@
 
 @font-face {
 	font-family: "Avara";
-	src:
-		url("https://fonts.ob248.com/fonts/Avara-BoldItalic.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/Avara-BoldItalic.woff") format("woff"),
-		url("https://fonts.ob248.com/fonts/Avara-BoldItalic.ttf") format("truetype");
+	src: url("https://fonts.ob248.com/fonts/Avara-BoldItalic.ttf")
+		format("truetype");
 	font-weight: 200;
 	font-style: italic;
 	font-display: swap;
@@ -22,10 +18,8 @@
 
 @font-face {
 	font-family: "Avara";
-	src:
-		url("https://fonts.ob248.com/fonts/Avara-Black.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/Avara-Black.woff") format("woff"),
-		url("https://fonts.ob248.com/fonts/Avara-Black.ttf") format("truetype");
+	src: url("https://fonts.ob248.com/fonts/Avara-Black.ttf")
+		format("truetype");
 	font-weight: 205;
 	font-style: normal;
 	font-display: swap;

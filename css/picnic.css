@@ -1,9 +1,7 @@
 @font-face {
 	font-family: "PicNic";
-	src:
-		url("https://fonts.ob248.com/fonts/PicNic.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/PicNic.woff") format("woff"),
-		url("https://fonts.ob248.com/fonts/PicNic.ttf") format("truetype");
+	src: url("https://fonts.ob248.com/fonts/PicNic.ttf")
+		format("truetype");
 	font-weight: 80;
 	font-style: normal;
 	font-display: swap;
