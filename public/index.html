@@ -78,7 +78,11 @@
         const importUrl = card.getAttribute("data-import-url");
         const importSnippet = buildImportSnippet(importUrl);
         const importOutput = card.querySelector("[data-import]");
+        const snippet = card.querySelector(".font-card__snippet");
         const copyButton = card.querySelector("[data-copy]");
+        const familyName = card
+          .querySelector(".font-card__title")
+          ?.textContent?.trim();
         const weightSelect = card.querySelector("[data-weight-select]");
         const weightRange = card.querySelector("[data-weight-range]");
         const demoText = card.querySelector("[data-demo]");
@@ -103,6 +107,17 @@
 
         if (importOutput) {
           importOutput.textContent = importSnippet;
+        }
+
+        if (snippet && familyName) {
+          const familyOutput = document.createElement("span");
+          familyOutput.className = "font-card__family";
+          familyOutput.textContent = `font-family: "${familyName}";`;
+          if (copyButton) {
+            snippet.insertBefore(familyOutput, copyButton);
+          } else {
+            snippet.appendChild(familyOutput);
+          }
         }
 
         if (!weightRange && !weightSelect) {

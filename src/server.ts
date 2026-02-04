@@ -1,6 +1,6 @@
 import { readdir } from "node:fs/promises";
 import { join, parse } from "node:path";
-import { Hono, type Context } from "hono";
+import { type Context, Hono } from "hono";
 import { serveStatic } from "hono/bun";
 
 const app = new Hono();
