@@ -25,6 +25,8 @@ const templatePath = join("public", "index.html");
 const cardPlaceholder = "<!-- FONT_CARDS -->";
 const importPlaceholder = "/* FONT_IMPORT */";
 const fontCacheControl = "public, max-age=31536000, immutable";
+const indexCacheControl = "public, max-age=300, stale-while-revalidate=60";
+const cssCacheControl = "public, max-age=86400, stale-while-revalidate=600";
 
 const escapeHtml = (value: string) =>
 	value
@@ -198,7 +200,11 @@ const indexHtml = templateHtml
 	.replace(cardPlaceholder, cards)
 	.replace(importPlaceholder, importCss);
 
-app.get("/", (c) => c.html(indexHtml));
+app.get("/", (c) =>
+	c.html(indexHtml, 200, {
+		"Cache-Control": indexCacheControl,
+	}),
+);
 
 const serveFontFile = async (c: Context) => {
 	const fontPath = c.req.path.replace(/^\/+/, "");
@@ -243,6 +249,7 @@ const cssRoutes = async () => {
 			const css = await Bun.file(filePath).text();
 			return c.text(css, 200, {
 				"Content-Type": "text/css; charset=utf-8",
+				"Cache-Control": cssCacheControl,
 			});
 		});
 	}
