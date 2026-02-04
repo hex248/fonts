@@ -29,7 +29,7 @@ body {
 }
 
 .page {
-	padding: 2rem;
+	padding: 1rem;
 	max-width: 1200px;
 	margin: 0 auto;
 }
@@ -68,6 +68,7 @@ body {
 	border: 1.5px solid var(--border-color);
 	padding: 1.5rem;
 	position: relative;
+	overflow: hidden;
 }
 
 .font-card__header {
@@ -170,21 +171,21 @@ body {
 	flex-wrap: wrap;
 	gap: 1rem;
 	border: 1px solid var(--border-color);
-	background: var(--fg-color);
+	/* background: var(--fg-color); */
 	padding: 0.5rem 0.5rem;
 	padding-left: 1rem;
 }
 
 .font-card__code {
 	font-size: 0.8rem;
-	color: var(--bg-color);
+	/* color: var(--bg-color); */
 	text-wrap: break-word;
 	text-transform: none;
 }
 
 .font-card__family {
 	font-size: 0.75rem;
-	color: var(--bg-color);
+	/* color: var(--bg-color); */
 	text-transform: none;
 }
 
@@ -192,18 +193,18 @@ body {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid var(--bg-color);
+	border: 1px solid var(--border-color);
 	background: transparent;
 	padding: 0.5rem 1rem;
 	font-size: 0.75rem;
 	font-weight: bold;
-	color: var(--bg-color);
+	/* color: var(--bg-color); */
 	cursor: pointer;
 }
 
 .font-card__copy:hover {
-	background: var(--bg-color);
-	color: var(--fg-color);
+	background: var(--fg-color);
+	color: var(--bg-color);
 }
 
 .hidden {
@@ -218,11 +219,11 @@ body {
 }
 
 .decal-grid--header {
-	font-size: 2rem;
+	font-size: 1rem;
 	font-weight: 700;
 	flex-direction: column;
 	justify-content: end;
-	align-items: end;
+	align-items: center;
 	margin-bottom: 1rem;
 }
 
