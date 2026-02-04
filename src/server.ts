@@ -1,6 +1,6 @@
 import { readdir } from "node:fs/promises";
 import { join, parse } from "node:path";
-import { Hono } from "hono";
+import { Hono, type Context } from "hono";
 import { serveStatic } from "hono/bun";
 
 const app = new Hono();
@@ -24,6 +24,7 @@ const cssDir = "css";
 const templatePath = join("public", "index.html");
 const cardPlaceholder = "<!-- FONT_CARDS -->";
 const importPlaceholder = "/* FONT_IMPORT */";
+const fontCacheControl = "public, max-age=31536000, immutable";
 
 const escapeHtml = (value: string) =>
 	value
@@ -199,7 +200,33 @@ const indexHtml = templateHtml
 
 app.get("/", (c) => c.html(indexHtml));
 
-app.use("/fonts/*", serveStatic({ root: "." }));
+const serveFontFile = async (c: Context) => {
+	const fontPath = c.req.path.replace(/^\/+/, "");
+	if (!fontPath.startsWith("fonts/") || fontPath.includes("..")) {
+		return c.notFound();
+	}
+
+	const file = Bun.file(fontPath);
+	if (!(await file.exists())) {
+		return c.notFound();
+	}
+
+	const headers = new Headers({
+		"Content-Type": file.type || "application/octet-stream",
+		"Content-Length": String(file.size),
+		"Cache-Control": fontCacheControl,
+		"Accept-Ranges": "bytes",
+	});
+
+	if (c.req.method === "HEAD") {
+		return new Response(null, { status: 200, headers });
+	}
+
+	return new Response(file, { status: 200, headers });
+};
+
+app.get("/fonts/*", serveFontFile);
+app.head("/fonts/*", serveFontFile);
 app.use("/*", serveStatic({ root: "./public" }));
 
 const cssRoutes = async () => {
