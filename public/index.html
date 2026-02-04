@@ -63,14 +63,111 @@
         }
       };
 
+      const parseWeights = (value) => {
+        if (!value) {
+          return [];
+        }
+        return value
+          .split(",")
+          .map((entry) => Number.parseInt(entry, 10))
+          .filter((weight) => Number.isFinite(weight))
+          .sort((a, b) => a - b);
+      };
+
       fontCards.forEach((card) => {
         const importUrl = card.getAttribute("data-import-url");
         const importSnippet = buildImportSnippet(importUrl);
         const importOutput = card.querySelector("[data-import]");
         const copyButton = card.querySelector("[data-copy]");
+        const weightSelect = card.querySelector("[data-weight-select]");
+        const weightRange = card.querySelector("[data-weight-range]");
+        const demoText = card.querySelector("[data-demo]");
+        const weightValue = card.querySelector("[data-weight-value]");
+        const weights = parseWeights(card.getAttribute("data-weights"));
+        const defaultWeight = Number.parseInt(
+          card.getAttribute("data-default-weight") ?? "",
+          10,
+        );
+        const weightMin = Number.parseInt(
+          card.getAttribute("data-weight-min") ?? "",
+          10,
+        );
+        const weightMax = Number.parseInt(
+          card.getAttribute("data-weight-max") ?? "",
+          10,
+        );
+        const weightStep = Number.parseInt(
+          card.getAttribute("data-weight-step") ?? "10",
+          10,
+        );
 
         if (importOutput) {
           importOutput.textContent = importSnippet;
+        }
+
+        if (!weightRange && !weightSelect) {
+          if (demoText && Number.isFinite(defaultWeight)) {
+            demoText.style.fontWeight = String(defaultWeight);
+          }
+        } else if (weightRange && Number.isFinite(weightMin) && Number.isFinite(weightMax)) {
+          const step = Number.isFinite(weightStep) && weightStep > 0 ? weightStep : 10;
+          const midpoint = Math.round((weightMin + weightMax) / 2);
+          const initialWeight = Number.isFinite(defaultWeight)
+            ? defaultWeight
+            : midpoint;
+          const normalizedWeight = Math.min(
+            weightMax,
+            Math.max(
+              weightMin,
+              Math.round((initialWeight - weightMin) / step) * step + weightMin,
+            ),
+          );
+          weightRange.min = String(weightMin);
+          weightRange.max = String(weightMax);
+          weightRange.step = String(step);
+          weightRange.value = String(normalizedWeight);
+          if (weightValue) {
+            weightValue.textContent = String(normalizedWeight);
+          }
+          if (demoText) {
+            demoText.style.fontWeight = String(normalizedWeight);
+          }
+          weightRange.addEventListener("input", (event) => {
+            const value = Number.parseInt(event.target.value, 10);
+            if (!Number.isFinite(value)) {
+              return;
+            }
+            if (weightValue) {
+              weightValue.textContent = String(value);
+            }
+            if (demoText) {
+              demoText.style.fontWeight = String(value);
+            }
+          });
+        } else if (weightSelect && weights.length > 0) {
+          weightSelect.innerHTML = "";
+          weights.forEach((weight) => {
+            const option = document.createElement("option");
+            option.value = String(weight);
+            option.textContent = String(weight);
+            weightSelect.appendChild(option);
+          });
+          const initialWeight = Number.isFinite(defaultWeight)
+            ? defaultWeight
+            : weights[Math.floor((weights.length - 1) / 2)];
+          weightSelect.value = String(initialWeight);
+          if (demoText) {
+            demoText.style.fontWeight = String(initialWeight);
+          }
+          weightSelect.addEventListener("change", (event) => {
+            const value = Number.parseInt(event.target.value, 10);
+            if (!Number.isFinite(value)) {
+              return;
+            }
+            if (demoText) {
+              demoText.style.fontWeight = String(value);
+            }
+          });
         }
 
         if (copyButton) {

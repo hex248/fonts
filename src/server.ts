@@ -26,20 +26,72 @@ const normalizeFamily = (value: string) =>
 const slugify = (value: string) =>
 	value.toLowerCase().replace(/\s+/g, " ").trim();
 
-const parseFontFamilies = (css: string) => {
+const parseWeightValues = (value: string) => {
+	const weights: number[] = [];
+	const numbers = value.match(/\d+/g)?.map((entry) => Number(entry)) ?? [];
+	if (numbers.length === 1) {
+		weights.push(numbers[0]);
+		return { weights };
+	}
+	if (numbers.length >= 2) {
+		const min = Math.min(numbers[0], numbers[1]);
+		const max = Math.max(numbers[0], numbers[1]);
+		return { weights, range: { min, max } };
+	}
+	const normalized = value.trim().toLowerCase();
+	if (normalized === "bold") {
+		weights.push(700);
+	} else if (normalized === "normal") {
+		weights.push(400);
+	}
+	return { weights };
+};
+
+const parseFontData = (css: string) => {
 	const families = new Set<string>();
+	const weightsByFamily = new Map<string, Set<number>>();
+	const rangesByFamily = new Map<string, { min: number; max: number }>();
 	const blocks = css.match(/@font-face\s*{[^}]*}/gms) ?? [];
 	for (const block of blocks) {
-		const match = block.match(/font-family\s*:\s*([^;]+);/i);
-		if (!match) {
+		const familyMatch = block.match(/font-family\s*:\s*([^;]+);/i);
+		if (!familyMatch) {
 			continue;
 		}
-		const family = normalizeFamily(match[1]);
-		if (family) {
-			families.add(family);
+		const family = normalizeFamily(familyMatch[1]);
+		if (!family) {
+			continue;
+		}
+		families.add(family);
+		const weightMatch = block.match(/font-weight\s*:\s*([^;]+);/i);
+		if (!weightMatch) {
+			continue;
+		}
+		const parsed = parseWeightValues(weightMatch[1]);
+		const weightSet = weightsByFamily.get(family) ?? new Set<number>();
+		for (const weight of parsed.weights) {
+			if (Number.isFinite(weight)) {
+				weightSet.add(weight);
+			}
+		}
+		if (parsed.range) {
+			const existingRange = rangesByFamily.get(family);
+			const min = existingRange
+				? Math.min(existingRange.min, parsed.range.min)
+				: parsed.range.min;
+			const max = existingRange
+				? Math.max(existingRange.max, parsed.range.max)
+				: parsed.range.max;
+			rangesByFamily.set(family, { min, max });
+		}
+		if (weightSet.size > 0) {
+			weightsByFamily.set(family, weightSet);
 		}
 	}
-	return [...families];
+	return {
+		families: [...families],
+		weightsByFamily,
+		rangesByFamily,
+	};
 };
 
 const buildFontCatalog = async () => {
@@ -51,13 +103,14 @@ const buildFontCatalog = async () => {
 
 	const cards: string[] = [];
 	const importUrls: string[] = [];
+	let cardIndex = 0;
 
 	for (const fileName of cssFiles) {
 		const baseName = parse(fileName).name;
 		const route = `/${baseName}`;
 		const filePath = join(cssDir, fileName);
 		const css = await Bun.file(filePath).text();
-		const families = parseFontFamilies(css);
+		const { families, weightsByFamily, rangesByFamily } = parseFontData(css);
 
 		if (families.length === 0) {
 			continue;
@@ -66,16 +119,41 @@ const buildFontCatalog = async () => {
 		importUrls.push(route);
 
 		for (const family of families) {
+			cardIndex += 1;
 			const displayName = family || baseName;
 			const dataName = slugify(displayName);
 			const fontFamily = family || displayName;
+			const weightList = [...(weightsByFamily.get(family) ?? [])]
+				.filter((weight) => Number.isFinite(weight))
+				.sort((a, b) => a - b);
+			const weightRange = rangesByFamily.get(family);
+			const weights = weightList.length > 0 ? weightList : [400];
+			const isSingleWeight = !weightRange && weights.length <= 1;
+			const defaultWeight = weightRange
+				? Math.round((weightRange.min + weightRange.max) / 2)
+				: weights[Math.floor((weights.length - 1) / 2)];
+			const weightType = weightRange ? "variable" : "static";
 			const card = `\n        <article class="font-card" data-font-card data-font-name="${escapeAttr(
 				dataName,
-			)}" data-import-url="${escapeAttr(route)}">\n          <div class="font-card__header">\n            <h2 class="font-card__title">${escapeHtml(
+			)}" data-import-url="${escapeAttr(route)}" data-weights="${escapeAttr(
+				weights.join(","),
+			)}" data-default-weight="${escapeAttr(
+				String(defaultWeight),
+			)}" data-weight-type="${escapeAttr(weightType)}" data-weight-min="${escapeAttr(
+				String(weightRange?.min ?? ""),
+			)}" data-weight-max="${escapeAttr(
+				String(weightRange?.max ?? ""),
+			)}" data-weight-step="10">\n          <div class="font-card__header">\n            <h2 class="font-card__title">${escapeHtml(
 				displayName,
-			)}</h2>\n          </div>\n\n          <div class="font-card__demo">\n            <p class="font-card__demo-primary" style="font-family: '${escapeAttr(
+			)}</h2>${isSingleWeight ? "" : `\n            <div class=\"font-card__controls\">\n              <label class=\"font-card__label\" for=\"weight-${escapeAttr(
+				dataName,
+			)}-${cardIndex}\">WEIGHT</label>\n              ${weightRange ? `<input class=\"font-card__range\" data-weight-range type=\"range\" id=\"weight-${escapeAttr(
+				dataName,
+			)}-${cardIndex}\" min=\"${escapeAttr(String(weightRange.min))}\" max=\"${escapeAttr(String(weightRange.max))}\" step=\"10\" />\n              <span class=\"font-card__value\" data-weight-value></span>` : `<select class=\"font-card__select\" data-weight-select id=\"weight-${escapeAttr(
+				dataName,
+			)}-${cardIndex}\"></select>`}\n            </div>`}\n          </div>\n\n          <div class="font-card__demo">\n            <p class="font-card__demo-primary" data-demo style="font-family: '${escapeAttr(
 				fontFamily,
-			)}', serif;">\n              The quick brown fox jumps over the lazy dog.\n            </p>\n          </div>\n\n          <div class="font-card__footer">\n            <p class="font-card__label">IMPORT SNIPPET</p>\n            <div class="font-card__snippet">\n              <code class="font-card__code" data-import></code>\n              <button type="button" data-copy class="font-card__copy">\n                COPY\n              </button>\n            </div>\n          </div>\n        </article>`;
+			)}', serif; font-weight: ${escapeAttr(String(defaultWeight))};">\n              The quick brown fox jumps over the lazy dog.\n            </p>\n          </div>\n\n          <div class="font-card__footer">\n            <p class="font-card__label">IMPORT SNIPPET</p>\n            <div class="font-card__snippet">\n              <code class="font-card__code" data-import></code>\n              <button type="button" data-copy class="font-card__copy">\n                COPY\n              </button>\n            </div>\n          </div>\n        </article>`;
 			cards.push(card);
 		}
 	}
