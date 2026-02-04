@@ -2,10 +2,10 @@
 
 :root {
 	color-scheme: light;
-	--bg-color: #e5e2d9;
-	--fg-color: #121212;
-	--accent-color: #db7f42;
-	--border-color: #121212;
+	--bg-color: #ded6c4;
+	--fg-color: #2e2b23;
+	--accent-color: #df7126;
+	--border-color: #2e2b23;
 	font-family:
 		"CommitMono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo,
 		Monaco, "Courier New", monospace;
@@ -167,6 +167,7 @@ body {
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
+	flex-wrap: wrap;
 	gap: 1rem;
 	border: 1px solid var(--border-color);
 	background: var(--fg-color);
@@ -178,6 +179,12 @@ body {
 	font-size: 0.8rem;
 	color: var(--bg-color);
 	text-wrap: break-word;
+	text-transform: none;
+}
+
+.font-card__family {
+	font-size: 0.75rem;
+	color: var(--bg-color);
 	text-transform: none;
 }
 
