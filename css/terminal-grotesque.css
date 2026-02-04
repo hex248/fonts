@@ -1,0 +1,11 @@
+@font-face {
+	font-family: "Terminal Grotesque";
+	src:
+		url("https://fonts.ob248.com/fonts/terminal-grotesque-webfont.woff2")
+		format("woff2"),
+		url("https://fonts.ob248.com/fonts/terminal-grotesque-webfont.woff")
+		format("woff");
+	font-weight: 80;
+	font-style: normal;
+	font-display: swap;
+}

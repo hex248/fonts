@@ -1,0 +1,9 @@
+@font-face {
+	font-family: "Ouroboros";
+	src:
+		url("https://fonts.ob248.com/fonts/Ouroboros-Regular.woff2") format("woff2"),
+		url("https://fonts.ob248.com/fonts/Ouroboros-Regular.woff") format("woff");
+	font-weight: 80;
+	font-style: normal;
+	font-display: swap;
+}
