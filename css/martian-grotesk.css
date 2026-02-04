@@ -1,8 +1,10 @@
 @font-face {
 	font-family: "Martian Grotesk";
 	src:
-		url("/fonts/MartianGrotesk-VFVF.woff2") format("woff2"),
-		url("/fonts/MartianGrotesk-VFVF.ttf") format("truetype");
+		url("https://fonts.ob248.com/fonts/MartianGrotesk-VFVF.woff2")
+		format("woff2"),
+		url("https://fonts.ob248.com/fonts/MartianGrotesk-VFVF.ttf")
+		format("truetype");
 	font-weight: 100 950;
 	font-stretch: 75% 200%;
 	font-style: normal;
