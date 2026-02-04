@@ -187,12 +187,12 @@ const buildFontCatalog = async () => {
 						}\n            </div>`
 			}\n          </div>\n\n          <div class="font-card__demo">\n            <p class="font-card__demo-primary" data-demo style="font-family: '${escapeAttr(
 				fontFamily,
-			)}', serif; font-weight: ${escapeAttr(String(defaultWeight))};">\n              The quick brown fox jumps over the lazy dog.\n            </p>\n          </div>\n\n          <div class="font-card__footer">\n            <p class="font-card__label">IMPORT SNIPPET</p>\n            <div class="font-card__snippet">\n              <code class="font-card__code" data-import></code>\n              <button type="button" data-copy class="font-card__copy">\n                COPY\n              </button>\n            </div>\n          </div>\n        </article>`;
+			)}', serif; font-weight: ${escapeAttr(String(defaultWeight))};">\n              The quick brown fox jumps over the lazy dog.\n            </p>\n          </div>\n\n          <div class="font-card__footer">\n           \n            <div class="font-card__snippet">\n              <code class="font-card__code" data-import></code>\n              <button type="button" data-copy class="font-card__copy">\n                COPY\n              </button>\n            </div>\n          </div>\n        </article>`;
 			cards.push(card);
 		}
 	}
 
-	const importCss = "@import url(\"/all\");";
+	const importCss = '@import url("/all");';
 
 	return {
 		cards: cards.join("\n"),
