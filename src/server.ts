@@ -1,7 +1,7 @@
-import { readFile, readdir, stat } from "node:fs/promises";
+import { readdir } from "node:fs/promises";
 import { join, parse } from "node:path";
 import { Hono } from "hono";
-import { serveStatic } from "hono/serve-static";
+import { serveStatic } from "hono/bun";
 
 const app = new Hono();
 
@@ -9,27 +9,6 @@ const cssDir = "css";
 const templatePath = join("public", "index.html");
 const cardPlaceholder = "<!-- FONT_CARDS -->";
 const importPlaceholder = "/* FONT_IMPORT */";
-
-const serveStaticFromFs = (options: { root: string }) =>
-	serveStatic({
-		root: options.root,
-		getContent: async (path) => {
-			try {
-				return await readFile(path);
-			} catch (error) {
-				return null;
-			}
-		},
-		isDir: async (path) => {
-			try {
-				const stats = await stat(path);
-				return stats.isDirectory();
-			} catch (error) {
-				return undefined;
-			}
-		},
-		join,
-	});
 
 const escapeHtml = (value: string) =>
 	value
@@ -79,7 +58,7 @@ const buildFontCatalog = async () => {
 		const baseName = parse(fileName).name;
 		const route = `/${baseName}`;
 		const filePath = join(cssDir, fileName);
-		const css = await readFile(filePath, "utf8");
+		const css = await Bun.file(filePath).text();
 		const families = parseFontFamilies(css);
 
 		if (families.length === 0) {
@@ -113,7 +92,7 @@ const buildFontCatalog = async () => {
 	};
 };
 
-const templateHtml = await readFile(templatePath, "utf8");
+const templateHtml = await Bun.file(templatePath).text();
 const { cards, importCss } = await buildFontCatalog();
 const indexHtml = templateHtml
 	.replace(cardPlaceholder, cards)
@@ -121,8 +100,8 @@ const indexHtml = templateHtml
 
 app.get("/", (c) => c.html(indexHtml));
 
-app.use("/fonts/*", serveStaticFromFs({ root: "." }));
-app.use("/*", serveStaticFromFs({ root: "./public" }));
+app.use("/fonts/*", serveStatic({ root: "." }));
+app.use("/*", serveStatic({ root: "./public" }));
 
 const cssRoutes = async () => {
 	const entries = await readdir(cssDir, { withFileTypes: true });
@@ -135,7 +114,7 @@ const cssRoutes = async () => {
 		const filePath = join(cssDir, entry.name);
 
 		app.get(route, async (c) => {
-			const css = await readFile(filePath, "utf8");
+			const css = await Bun.file(filePath).text();
 			return c.text(css, 200, {
 				"Content-Type": "text/css; charset=utf-8",
 			});
@@ -145,11 +124,9 @@ const cssRoutes = async () => {
 
 await cssRoutes();
 
-const port = Number(process.env.PORT ?? 3000);
+const port = Number(Bun.env.PORT ?? 3000);
 
 export default {
 	fetch: app.fetch,
 	port,
 };
-
-export { app };
