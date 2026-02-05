@@ -1,0 +1,12 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+	<style>
+		tspan { white-space:pre } 
+		.s0 { fill: #ded6c4 } 
+		.t1 { font-size: 150px;fill: #2e2b23;font-weight: 700;font-style: italic;font-family: "CommitMono-BoldItalic", "CommitMono" } 
+	</style>
+	<path id="Layer 1" fill-rule="evenodd" class="s0" d="m250 500c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"/>
+	<text id="f" style="transform: matrix(3.076,0,0,3.076,91.087,422.6)">
+		<tspan x="0" y="0" class="t1">f
+</tspan>
+	</text>
+</svg>
