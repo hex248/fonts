@@ -27,6 +27,11 @@ const importPlaceholder = "/* FONT_IMPORT */";
 const fontCacheControl = "public, max-age=31536000, immutable";
 const indexCacheControl = "public, max-age=300, stale-while-revalidate=60";
 const cssCacheControl = "public, max-age=86400, stale-while-revalidate=600";
+const sharedCorsHeaders = {
+	"Access-Control-Allow-Origin": "*",
+	"Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+	"Access-Control-Allow-Headers": "Content-Type, Authorization",
+} as const;
 
 const escapeHtml = (value: string) =>
 	value
@@ -119,6 +124,22 @@ const addFontDisplaySwap = (css: string) =>
 		}
 		return block.replace(/}\s*$/, "\n\tfont-display: swap;\n}");
 	});
+
+const contentTypeForFontPath = (fontPath: string, fallback: string) => {
+	const ext = parse(fontPath).ext.toLowerCase();
+	switch (ext) {
+		case ".woff2":
+			return "font/woff2";
+		case ".woff":
+			return "font/woff";
+		case ".ttf":
+			return "font/ttf";
+		case ".otf":
+			return "font/otf";
+		default:
+			return fallback || "application/octet-stream";
+	}
+};
 
 const buildFontCatalog = async () => {
 	const entries = await readdir(cssDir, { withFileTypes: true });
@@ -224,10 +245,12 @@ const serveFontFile = async (c: Context) => {
 	}
 
 	const headers = new Headers({
-		"Content-Type": file.type || "application/octet-stream",
+		...sharedCorsHeaders,
+		"Cross-Origin-Resource-Policy": "cross-origin",
+		"Timing-Allow-Origin": "*",
+		"Content-Type": contentTypeForFontPath(fontPath, file.type),
 		"Content-Length": String(file.size),
 		"Cache-Control": fontCacheControl,
-		"Accept-Ranges": "bytes",
 	});
 
 	if (c.req.method === "HEAD") {

@@ -1,7 +1,8 @@
 @font-face {
 	font-family: "BackOut";
-	src: url("https://fonts.ob248.com/fonts/BackOut.ttf")
-		format("truetype");
+	src:
+		url("https://fonts.ob248.com/fonts/BackOut.woff2") format("woff2"),
+		url("https://fonts.ob248.com/fonts/BackOut.ttf") format("truetype");
 	font-weight: 100;
 	font-style: normal;
 	font-display: swap;

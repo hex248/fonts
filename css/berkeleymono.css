@@ -1,15 +1,17 @@
 @font-face {
 	font-family: "Berkeley Mono";
-	src: url("https://fonts.ob248.com/fonts/BerkeleyMono-Regular.ttf")
-		format("truetype");
+	src:
+		url("https://fonts.ob248.com/fonts/BerkeleyMono-Regular.woff2") format("woff2"),
+		url("https://fonts.ob248.com/fonts/BerkeleyMono-Regular.ttf") format("truetype");
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
 }
 @font-face {
 	font-family: "Berkeley Mono";
-	src: url("https://fonts.ob248.com/fonts/BerkeleyMono-Italic.ttf")
-		format("truetype");
+	src:
+		url("https://fonts.ob248.com/fonts/BerkeleyMono-Italic.woff2") format("woff2"),
+		url("https://fonts.ob248.com/fonts/BerkeleyMono-Italic.ttf") format("truetype");
 	font-weight: 400;
 	font-style: italic;
 	font-display: swap;

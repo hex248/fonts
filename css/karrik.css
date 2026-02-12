@@ -1,7 +1,8 @@
 @font-face {
 	font-family: "Karrik";
-	src: url("https://fonts.ob248.com/fonts/Karrik-Regular.ttf")
-		format("truetype");
+	src:
+		url("https://fonts.ob248.com/fonts/Karrik-Regular.woff2") format("woff2"),
+		url("https://fonts.ob248.com/fonts/Karrik-Regular.ttf") format("truetype");
 	font-weight: 80;
 	font-style: normal;
 	font-display: swap;
@@ -9,8 +10,9 @@
 
 @font-face {
 	font-family: "Karrik";
-	src: url("https://fonts.ob248.com/fonts/Karrik-Italic.ttf")
-		format("truetype");
+	src:
+		url("https://fonts.ob248.com/fonts/Karrik-Italic.woff2") format("woff2"),
+		url("https://fonts.ob248.com/fonts/Karrik-Italic.ttf") format("truetype");
 	font-weight: 80;
 	font-style: italic;
 	font-display: swap;

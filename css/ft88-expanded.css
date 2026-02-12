@@ -1,7 +1,8 @@
 @font-face {
 	font-family: "FT88 Expanded";
-	src: url("https://fonts.ob248.com/fonts/FT88-Expanded.ttf")
-		format("truetype");
+	src:
+		url("https://fonts.ob248.com/fonts/FT88-Expanded.woff2") format("woff2"),
+		url("https://fonts.ob248.com/fonts/FT88-Expanded.ttf") format("truetype");
 	font-weight: 80;
 	font-style: normal;
 	font-display: swap;
