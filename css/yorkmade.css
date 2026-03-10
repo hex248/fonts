@@ -1,0 +1,7 @@
+@font-face {
+	font-family: "Yorkmade Demo";
+	src: url("/fonts/Yorkmade Demo.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}

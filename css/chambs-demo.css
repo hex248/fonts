@@ -1,0 +1,7 @@
+@font-face {
+	font-family: "Chambs Demo";
+	src: url("/fonts/ChambsDemo-Fat.woff2") format("woff2");
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
