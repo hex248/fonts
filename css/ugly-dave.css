@@ -1,0 +1,15 @@
+@font-face {
+	font-family: "Ugly Dave";
+	src: url("/fonts/Ugly-Dave-Regular.woff") format("woff");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Ugly Dave Alternates";
+	src: url("/fonts/Ugly-Dave-Alternates.woff") format("woff");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
