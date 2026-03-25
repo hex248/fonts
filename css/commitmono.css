@@ -1,39 +1,8 @@
 @font-face {
 	font-family: "Commit Mono";
-	src:
-		url("https://fonts.ob248.com/fonts/CommitMono-400-Regular.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/CommitMono-400-Regular.otf") format("opentype");
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Commit Mono";
-	src:
-		url("https://fonts.ob248.com/fonts/CommitMono-700-Regular.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/CommitMono-700-Regular.otf") format("opentype");
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Commit Mono";
-	src:
-		url("https://fonts.ob248.com/fonts/CommitMono-400-Italic.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/CommitMono-400-Italic.otf") format("opentype");
-	font-weight: 400;
-	font-style: italic;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Commit Mono";
-	src:
-		url("https://fonts.ob248.com/fonts/CommitMono-700-Italic.woff2") format("woff2"),
-		url("https://fonts.ob248.com/fonts/CommitMono-700-Italic.otf") format("opentype");
-	font-weight: 700;
-	font-style: italic;
+	src: url("https://fonts.ob248.com/fonts/CommitMono-Variable.ttf")
+		format("truetype");
+	font-weight: 200 700;
+	font-style: normal italic;
 	font-display: swap;
 }
