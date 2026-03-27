@@ -1,0 +1,7 @@
+@font-face {
+	font-family: "Neue Bit";
+	src: url("/fonts/PPNeueBit-Bold.woff") format("woff");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
